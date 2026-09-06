@@ -1,0 +1,106 @@
+{
+  "name": "WiByte Python Lab 1.1",
+  //"image": "ghcr.io/vineetwibyte-enjoycoding/wibytepythonlabtemplate:test",
+  
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {}
+  },
+
+
+  
+  // ==============================================================================
+  // PORT FORWARDING & VISIBILITY
+  // Port 6080 is explicitly marked PUBLIC to bypass browser third-party cookie
+  // and OAuth restrictions (especially on Chromebooks and school networks). (Though this does not seem to work)
+  // ==============================================================================
+
+  "forwardPorts": [6080],
+  "portsAttributes": {
+    "5901": {
+      "label": "Raw VNC Server (Internal)",
+      "onAutoForward": "ignore"
+    },
+    "6080": {
+      "onAutoForward": "silent",
+      "visibility": "public", 
+      "elevateIfNeeded": true
+    }
+  },
+
+
+  // Hide all other ports (to prevent clutter and confusion). 
+  "otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  },
+
+  // ==============================================================================
+  // PROCESS MANAGEMENT
+  // Boots supervisord on container startup, resume, or restart.
+  // ==============================================================================
+
+  "postStartCommand": "bash .devcontainer/init.sh",
+  // Commented out since this has been made a part of the Docker File. 
+  // "postCreateCommand": "bash .devcontainer/setup.sh",
+  // ==============================================================================
+  // CODESPACES INFRASTRUCTURE & RESOURCE CONFIGURATION
+  // 1. Fixed idle timeout to 10 minutes to auto-shutdown abandoned sessions.
+  // 2. Pins container hardware specs (2 cores, 4GB RAM) for predictable execution.
+  // ==============================================================================
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "4gb",
+    "storage": "32gb"
+  },
+ 
+  // ==============================================================================
+  // VS CODE ENVIRONMENT & EXTENSIONS
+  // ==============================================================================
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "github.copilot",
+        "ms-python.python"
+      ],
+      "settings": {
+        // --- Core Python & Security ---
+        "security.workspace.trust.enabled": false,
+        "security.workspace.trust.banner": "never",
+        "python.defaultInterpreterPath": "/usr/local/bin/python3",
+
+        // --- Suppress Extension & File Recommendation Pop-ups ---
+        "extensions.ignoreRecommendations": true,
+
+        // --- Suppress Git Prompts & Confirmations ---
+        "git.autofetch": false,
+        "git.confirmSync": false,
+        "git.enableSmartCommit": true,
+
+        // --- UI & Notification De-cluttering ---
+        "workbench.tips.enabled": false,
+        "editor.lightbulb.enabled": "off",
+        "github.copilot.editor.enableCodeActions": false,
+        "editor.suggestOnTriggerCharacters": true,
+        "editor.parameterHints.enabled": true,
+        "workbench.startupEditor": "readme",
+
+        // --- Clean File Tree (Hide noise) ---
+        "files.exclude": {
+          "**/*.dist-info": true,
+          "**/colorama": true,
+          "**/pyfiglet": true,
+          "**/*.pyc": true,
+          "**/__pycache__": true
+        },
+
+        // --- Student Terminal Customizations ---
+        "terminal.integrated.fontSize": 15,
+        "terminal.integrated.cursorBlinking": true,
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  }
+}
