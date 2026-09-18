@@ -65,4 +65,4 @@ if confirm.strip().lower() == 'yes':
         print()
 
 else:
-    print('\nPreferences not confirmed. Run the program again to restart.')
+    print('\nPreferences not confirmed. Try running it again :).')
