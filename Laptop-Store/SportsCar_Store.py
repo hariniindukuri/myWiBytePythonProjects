@@ -53,16 +53,34 @@ if confirm.strip().lower() == 'yes':
     print('\nHere are ' + str(len(selected)) + ' cars that met your preference:\n')
 
     # 5. Output 
+    print(f"{'No.':<6}", end='')
     for spec in specs:
         print(f'{spec:<18}', end='')
     print()
 
-    print('-' * (18 * len(specs)))
+    print('-' * (6 + 18 * len(specs)))
 
-    for car in selected:
+    for idx, car in enumerate(selected, 1):
+        print(f'{idx:<6}', end='')
         for spec in specs:
             print(f'{car[spec]:<18}', end='')
         print()
+
+    # Simple selection and accessory dictionary
+    pick = int(input('\nPick any car number: ')) - 1
+    brand = selected[pick]['Brand']
+
+    accessories = {
+        'Porsche': ['Skull gear knob', 'Stickers', 'Sport mats'],
+        'BMW': ['Blue headlights', 'Interior lights', 'Badges'],
+        'McLaren': ['Telemetry kit', 'Wing mirrors', 'Steering wheel'],
+        'Ferrari': ['Scuderia shields', 'Red belts', 'Titanium tips'],
+        'Lamborghini': ['Underglow', 'Neon lights', 'Racing stripes']
+    }
+
+    print(f'Accessories for {brand}: {", ".join(accessories[brand])}')
+    acc = input('Which accessory do you want? : ')
+    print(f'Added {acc} to your {brand}!')
 
 else:
     print('\nPreferences not confirmed. Try running it again :).')
