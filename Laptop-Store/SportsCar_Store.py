@@ -1,4 +1,5 @@
 import random
+from datetime import datetime, timedelta
 
 def append_s(name):
     return name + 's'
@@ -21,7 +22,7 @@ master_dict['Interiors'] = ['Leather', 'Alcantara', 'Carbon Fiber', 'Cloth', 'Sy
 master_dict['Wheels'] = ['Alloy', 'Carbon Fiber', 'Forged', 'Chrome']
 master_dict['Prices'] = ['INR 1.5 Cr', 'INR 3 Cr', 'INR 5 Cr', 'INR 8.5 Cr', 'INR 10.5 Cr']
 
-#  Collect user preferences
+# Collect user preferences
 user_choice = {}
 for spec in specs:
     user_choice[spec] = input('Any preference for ' + spec + ' (These are the available options): ' + ', '.join(master_dict[append_s(spec)]) + '\n')
@@ -67,8 +68,9 @@ if confirm.strip().lower() == 'yes':
         print()
 
     # Simple selection and accessory dictionary
-    pick = int(input('\nPick any car number: ')) - 1
-    brand = selected[pick]['Brand']
+    pick = int(input('\nPick any car option number: ')) - 1
+    chosen_car = selected[pick]
+    brand = chosen_car['Brand']
 
     accessories = {
         'Porsche': ['Skull gear knob', 'Stickers', 'Sport mats'],
@@ -81,6 +83,32 @@ if confirm.strip().lower() == 'yes':
     print(f'Accessories for {brand}: {", ".join(accessories[brand])}')
     acc = input('Which accessory do you want? : ')
     print(f'Added {acc} to your {brand}!')
+
+    # Interactive delivery announcement and payment prompt
+    delivery_date = (datetime.now() + timedelta(days=8)).strftime('%A, %B %d, %Y')
+    
+    color = chosen_car['Color']
+    engine = chosen_car['Engine']
+    trans = chosen_car['Transmission']
+    drivetrain = chosen_car['DriveTrain']
+    interior = chosen_car['Interior']
+    wheels = chosen_car['Wheel']
+    price = chosen_car['Price']
+
+    print("\n" + "🏁 " * 15)
+    print("🔥 CONGRATULATIONS! YOUR DREAM MACHINE IS LOCKED IN! 🔥")
+    print("=" * 45)
+    print(f"Your beastly {color} {brand} with a roaring {engine} engine, {trans} transmission,")
+    print(f"and {drivetrain} setup is officially in production!")
+    print(f"✨ Custom Features:")
+    print(f"   • Cabin: {interior} interior")
+    print(f"   • Rims: {wheels} wheels")
+    print(f"   • Extra Flex: Custom {acc}")
+    print("-" * 45)
+    print(f"📦 Get ready! It arrives at your doorstep in exactly 8 days on {delivery_date}.")
+    print(f"💳 Total Investment: {price}")
+    print(f"⚡ Please process the transfer of {price} by this week to finalize order. Welcome to Apex Aura! 🏎️💨")
+    print("🏁 " * 15)
 
 else:
     print('\nPreferences not confirmed. Try running it again :).')
