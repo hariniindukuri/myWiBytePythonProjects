@@ -7,7 +7,7 @@ print('Welcome to Apex Aura')
 print('We have a huge collection of cars')
 print('Please indicate your preferences.\n')
 
-specs = ['Brand', 'Color', 'Transmission', 'Engine', 'DriveTrain', 'Interior', 'Wheels', 'Price']
+specs = ['Brand', 'Color', 'Transmission', 'Engine', 'DriveTrain', 'Interior', 'Wheel', 'Price']
 
 specs_new = list(map(append_s, specs))
 master_dict = dict.fromkeys(specs_new)
@@ -18,20 +18,20 @@ master_dict['Transmissions'] = ['Manual', 'Automatic', 'Dual-Clutch', 'Sequentia
 master_dict['Engines'] = ['V6', 'V8', 'V10', 'Electric', 'Hybrid']
 master_dict['DriveTrains'] = ['Rear-Wheel Drive', 'All-Wheel Drive', 'Front Wheel Drive', 'Four-Wheel Drive']
 master_dict['Interiors'] = ['Leather', 'Alcantara', 'Carbon Fiber', 'Cloth', 'Synthetic']
-master_dict['Wheelss'] = ['Alloy', 'Carbon Fiber', 'Forged', 'Chrome']
+master_dict['Wheels'] = ['Alloy', 'Carbon Fiber', 'Forged', 'Chrome']
 master_dict['Prices'] = ['INR 1.5 Cr', 'INR 3 Cr', 'INR 5 Cr', 'INR 8.5 Cr', 'INR 10.5 Cr']
 
 #  Collect user preferences
 user_choice = {}
-for kk in specs:
-    user_choice[kk] = input('Any preference for ' + kk + ' (Enter no for no preference):\n')
+for spec in specs:
+    user_choice[spec] = input('Any preference for ' + spec + ' (These are the available options): ' + ', '.join(master_dict[append_s(spec)]) + '\n')
 
 # Print user preferences for confirming choices
 print('\n' + '='*30)
 print('YOUR SELECTED PREFERENCES:')
 print('='*30)
-for kk in specs:
-    print(kk + ': ' + user_choice[kk])
+for spec in specs:
+    print(spec + ': ' + user_choice[spec])
 
 # 3. Ask for confirmation
 confirm = input('\nAre you sure you want to proceed with these preferences? (yes/no): ')
@@ -42,26 +42,26 @@ if confirm.strip().lower() == 'yes':
     selected = []
     for i in range(random.randint(8, 11)):
         car = {}
-        for kk in specs:
-            pref = user_choice[kk].strip()
+        for spec in specs:
+            pref = user_choice[spec].strip()
             if pref.lower() != 'no':
-                car[kk] = pref
+                car[spec] = pref
             else:
-                car[kk] = random.choice(master_dict[append_s(kk)])
+                car[spec] = random.choice(master_dict[append_s(spec)])
         selected.append(car)
 
     print('\nHere are ' + str(len(selected)) + ' cars that met your preference:\n')
 
     # 5. Output 
-    for kk in specs:
-        print(f'{kk:<13}', end='')
+    for spec in specs:
+        print(f'{spec:<18}', end='')
     print()
 
-    print('-' * (13 * len(specs)))
+    print('-' * (18 * len(specs)))
 
     for car in selected:
-        for kk in specs:
-            print(f'{car[kk]:<13}', end='')
+        for spec in specs:
+            print(f'{car[spec]:<18}', end='')
         print()
 
 else:
