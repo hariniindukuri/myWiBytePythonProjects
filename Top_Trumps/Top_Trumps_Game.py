@@ -39,7 +39,6 @@ computer_cards = all_cards[0::2]
 player_cards = all_cards[1::2]
 table_cards = []
 
-
 mapping_dict = {}
 for key in relevant_keys:
     k_lower = key.lower()
@@ -55,9 +54,14 @@ for key in relevant_keys:
 chance = 'player'
 game_over = False
 
+# --- ADDED: Initialize scores for player and computer ---
+player_score = 0
+computer_score = 0
+
 while not game_over:
     if not player_cards or not computer_cards:
         print("Game Over! Out of cards.")
+        print(f"Final Score -> You: {player_score} | Computer: {computer_score}")
         break
 
     player = player_cards.pop(0)
@@ -92,8 +96,20 @@ while not game_over:
     # All criteria (B, H, Y, T) use order = 1 (higher value wins)
     winner = determine_winner(value_player, value_computer, order=1)
     
+    # --- ADDED: Update scores based on the winner ---
+    if winner == 'player':
+        player_score += 1
+    elif winner == 'computer':
+        computer_score += 1
+    # Note: If it's a 'draw', neither player gets a point.
+
     print('Key of interest is :', key_requested)
     print('Player', key_requested, 'is :', value_player)
     print('Computer', key_requested, 'is :', value_computer)
     print('Winner of this round:', winner)
+    
+    print(f"----------------------------------------")
+    print(f"Current Score -> You: {player_score} | Computer: {computer_score}")
+    print(f"----------------------------------------")
+
     input('\nPress Enter to continue to the next round...')
